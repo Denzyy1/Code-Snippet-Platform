@@ -18,41 +18,31 @@ if($_SESSION['logged'] != 1){
         <div class="container">
             <div class="logo">Snippet Share</div>
             <ul class="nav-links">
+                  <li><a href="home.php">Home</a></li>
+                  <li><a href="mysnippets.php">Mysnippets</a></li>  
                 <li><a href="profile.php">Profile</a></li>
                 <li><a href="snippets.php" class="paste-btn">+ Paste</a></li>
             </ul>
         </div>
     </nav>
-
+    <form action="phpfunc/snippet-control.php" method="POST">
     <div class="snippet-container">
         <h2>New Snippet</h2>
-        <textarea class="snippet-textarea" placeholder="Write your snippet here..."></textarea>
+        <textarea class="snippet-textarea" placeholder="Write your snippet here..." name="snippet_content"></textarea>
 
-        <h3>Optional Snippet Settings</h3>
+        <h3>Snippet Title: </h3>
         <div class="settings">
             
-            <label for="tags">Tags:</label>
-            <input type="text" id="tags" placeholder="Enter tags...">
+           
+            <input type="text" id="tags" placeholder="Enter snippet title..." name="snippet_title">
 
-            <label for="syntax">Syntax Highlighting:</label>
-            <select id="syntax">
-                <option>None</option>
-                <option>JavaScript</option>
-                <option>Python</option>
-                <option>PHP</option>
-            </select>
-
-            <label for="expiration">Snippet Expiration:</label>
-            <select id="expiration">
-                <option>Never</option>
-                <option>10 minutes</option>
-                <option>1 hour</option>
-                <option>1 day</option>
-            </select>
+            <label for="tags">Snippet language:</label>
+            <input type="text" id="tags" placeholder="Enter snippet languauge..." name="snippet_language">
+           
         </div>
 
-        <button class="submit-btn">Save Snippet</button>
+        <input type = "submit" class="submit-btn"></button>
     </div>
-
+    </form>
 </body>
 </html>

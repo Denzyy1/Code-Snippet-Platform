@@ -18,6 +18,8 @@ if($_SESSION['logged'] != 1){
     <nav class="navbar">
         <div class="logo">Snippet Share</div>
         <ul class="nav-links">
+           <li><a href="home.php">Home</a></li>
+           <li><a href="mysnippets.php">Mysnippets</a></li>  
             <li><a href="snippets.php" class="paste-btn">+ Paste</a></li>
             <li><a href="profile.php" class="active">Profile</a></li>
             <li><a href="index.php">Logout</a></li>
@@ -27,31 +29,19 @@ if($_SESSION['logged'] != 1){
     
     <div class="profile-container">
         <h2>My Profile</h2>
-
+        
         <div class="profile-content">
-           
+           <form action="phpfunc/User-control.php" method="POST" >
             <div class="profile-form">
-                <label>Username:</label>
-                <input type="text" id="username" >
+                <h3>change your current password </h3>
+                <label>Current password </label>
+                <input type="password" name="current_password" placeholder="Enter current password ..." >
+                <label>New password </label>
+                <input type="password" name="new_password" placeholder="Enter new password ..." >
 
-                <label>Email Address:</label>
-                <input type="email" id="email" >
-
-                <label>Email Status:</label>
-                <input type="text" value="Verified!" disabled>
-
-                <label>Website URL:</label>
-                <input type="url" placeholder="Enter a valid URL starting with http://">
-
-                <label>Location:</label>
-                <input type="text" placeholder="Where are you from?">
-
-                <label>Account Type:</label>
-                <input type="text" value="Free" disabled>
-
-                <button class="profile-btn">Update Profile</button>
+                <input type= "submit" class="profile-btn"></button>
             </div>
-
+           </form>
            
             
         </div>
