@@ -90,8 +90,8 @@ if($_SESSION['logged'] != 1){
        
         <div class="snippets-list">
             <?php foreach ($snippets as $snippet): 
-                $processed = truncateLines($snippet['content']);
-                $isOwner = isset($_SESSION['user_id']) && $_SESSION['user_id'] == $snippet['user_id'];
+                $finished_data = truncateLines($snippet['content']);
+              
             ?>
                 <div class="snippet">
                     <h3><?= htmlspecialchars($snippet['title']) ?></h3>
@@ -105,37 +105,32 @@ if($_SESSION['logged'] != 1){
                     <pre>
                         <code 
                             class="language-<?= htmlspecialchars($snippet['language']) ?>" 
-                            data-full="<?= htmlspecialchars($processed['full']) ?>" 
-                            <?= $processed['hasMore'] ? 'data-truncated="' . htmlspecialchars($processed['truncated']) . '"' : '' ?>>
-                            <?= htmlspecialchars($processed['truncated']) ?>
+                            data-full="<?= htmlspecialchars($finished_data['full']) ?>" 
+                            <?= $finished_data['hasMore'] ? 'data-truncated="' . htmlspecialchars($finished_data['truncated']) . '"' : '' ?>>
+                            <?= htmlspecialchars($finished_data['truncated']) ?>
                         </code>
                     </pre>
 
                     <div class="snippet-actions">
-                        <button class="btn-secondary copy-btn" data-content="<?= htmlspecialchars($processed['full']) ?>">
+                        <button class="btn-secondary copy-btn" data-content="<?= htmlspecialchars($finished_data['full']) ?>">
                             📋 Copy
                         </button>
 
-                        <?php if ($isOwner): ?>
-                            <button class="btn-primary edit-btn" data-id="<?= $snippet['id'] ?>">✏️ Edit</button>
-                            <button class="btn-danger delete-btn" data-id="<?= $snippet['id'] ?>">🗑 Delete</button>
-                        <?php endif; ?>
-
-                        <?php if ($processed['hasMore']): ?>
+                        <?php if ($finished_data['hasMore']): ?>
                             <button class="btn-secondary read-more"> Read More</button>
                             
                         <?php endif; ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
-    <?php endif; ?>
-</div>
 
 <script>
    
 document.addEventListener("DOMContentLoaded", () => {
-    // Copy Snippet to Clipboard
+
     document.querySelectorAll('.copy-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             navigator.clipboard.writeText(this.dataset.content).then(() => {
@@ -148,26 +143,25 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener('click', function() {
             const snippet = this.closest('.snippet');
             const codeBlock = snippet.querySelector('code');
-            const isExpanded = codeBlock.dataset.expanded === "true"; // Track expansion state
+            const isExpanded = codeBlock.dataset.expanded === "true"; 
 
             if (isExpanded) {
-                // Collapse back to truncated version
+            
                 codeBlock.innerHTML = escapeHTML(codeBlock.dataset.truncated);
                 this.textContent = ' Read More';
                 codeBlock.dataset.expanded = "false";
             } else {
-                // Expand to full version
+            
                 codeBlock.innerHTML = escapeHTML(codeBlock.dataset.full);
                 this.textContent = ' Show Less';
                 codeBlock.dataset.expanded = "true";
             }
 
-            // Re-apply syntax highlighting
+            
             hljs.highlightElement(codeBlock);
         });
     });
 
-    // Function to escape HTML to prevent issues when setting innerHTML
     function escapeHTML(str) {
         return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
